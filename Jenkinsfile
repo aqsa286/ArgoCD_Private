@@ -33,6 +33,8 @@ pipeline {
                     sh "git push https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/aqsa286/ArgoCD_Private.git main"
                 }
             }
+            
         }
     }
 }
+# Change ECR tags with sed command

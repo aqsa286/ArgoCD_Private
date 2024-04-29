@@ -1,6 +1,6 @@
 kind: Application
 metadata:
-  name: argo-app-name
+  name: argo-app-name-1
   namespace: argocd
 spec:
   source:

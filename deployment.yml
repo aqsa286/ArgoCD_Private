@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: myapp-1
 spec:
   selector:
     matchLabels:
@@ -15,8 +15,8 @@ spec:
     spec:
       serviceAccountName: argocd-ecr-service-account
       containers:
-      - name: myapp
-        image: 980136594430.dkr.ecr.eu-west-1.amazonaws.com/myapp333:3.1
+      - name: myapp-1
+        image: 980136594430.dkr.ecr.eu-west-1.amazonaws.com/myapp124:1.6
         ports:
         - containerPort: 8080
 
@@ -24,11 +24,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp
+  name: myapp-1
 spec:
   selector:
     app: myapp
   ports:
-  - port: 8080
+  - port: 8081
     protocol: TCP
     targetPort: 8080

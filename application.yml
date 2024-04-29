@@ -1,0 +1,19 @@
+kind: Application
+metadata:
+  name: argo-app-name
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/Tap-Payments/devstack.git
+    targetRevision: branchname
+    path: k8s/deployments/app-name
+  project: default
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: app-name
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

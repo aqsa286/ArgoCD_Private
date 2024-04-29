@@ -16,7 +16,7 @@ spec:
       serviceAccountName: argocd-ecr-service-account
       containers:
       - name: myapp
-        image: 980136594430.dkr.ecr.eu-west-1.amazonaws.com/myapp123:1.6
+        image: 980136594430.dkr.ecr.eu-west-1.amazonaws.com/myapp333:1.6
         ports:
         - containerPort: 8080
 

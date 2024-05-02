@@ -1,8 +1,8 @@
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-app-name-1
-  namespace: argocd
+  name: argo-app-name
+  namespace: test
 spec:
   source:
     repoURL: https://github.com/Tap-Payments/devstack.git

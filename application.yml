@@ -6,7 +6,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/Tap-Payments/devstack.git
-    targetRevision: branchname
+    targetRevision: main
     path: k8s/deployments/app-name
   project: default
   destination: 

@@ -1,20 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-app-name
+  name: myapp-argo-application
   namespace: test
 spec:
-  source:
-    repoURL: https://github.com/Tap-Payments/devstack.git
-    targetRevision: main
-    path: k8s/deployments/app-name
   project: default
+
+  source:
+    repoURL: https://github.com/aqsa286/Private-argocd-repo.git
+    targetRevision: HEAD
   destination: 
     server: https://kubernetes.default.svc
-    namespace: app-name
+    namespace: myapp
+
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
+
     automated:
       selfHeal: true
       prune: true

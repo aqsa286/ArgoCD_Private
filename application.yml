@@ -5,18 +5,14 @@ metadata:
   namespace: dummy
 spec:
   project: default
-
   source:
     repoURL: https://github.com/aqsa286/ArgoCD_Private.git
     targetRevision: HEAD
-  destination: 
+    path: /   # Specify the root path of your Git repository
+  destination:
     server: https://kubernetes.default.svc
     namespace: myapp
-
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
     automated:
       selfHeal: true
       prune: true

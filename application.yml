@@ -2,12 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: myapp-argo-application
-  namespace: test
+  namespace: dummy
 spec:
   project: default
 
   source:
-    repoURL: https://github.com/aqsa286/Private-argocd-repo.git
+    repoURL: https://github.com/aqsa286/ArgoCD_Private.git
     targetRevision: HEAD
     path: kubernetes
   destination: 

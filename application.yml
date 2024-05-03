@@ -9,7 +9,6 @@ spec:
   source:
     repoURL: https://github.com/aqsa286/ArgoCD_Private.git
     targetRevision: HEAD
-    path: kubernetes
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: myapp-1
 spec:
   selector:
     matchLabels:
@@ -13,20 +13,20 @@ spec:
         app: myapp
     spec:
       containers:
-      - name: myapp
-        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/private-argocd:latest
+      - name: myapp-1
+        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/private-argocd:1.6
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-service
+  name: myapp-1
 spec:
   selector:
     app: myapp
   ports:
-  - port: 8080
+  - port: 8081
     protocol: TCP
     targetPort: 8080
   

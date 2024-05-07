@@ -13,8 +13,8 @@ spec:
         app: myapp
     spec:
       containers:
-      - name: new-cont
-        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/new-app-tech:1.3
+      - name: new-cont1
+        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/new-app1-sandbox:1.3
         ports:
         - containerPort: 3000
 ---

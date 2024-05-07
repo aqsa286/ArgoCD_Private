@@ -1,0 +1,161 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-apiservices-list-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-apiservices-list
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-apiservices-list
+rules:
+- apiGroups: ["apiregistration.k8s.io"]
+  resources: ["apiservices"]
+  verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-application-controller-role
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["list", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-application-controller-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-application-controller-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-cluster-admin-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-role-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-service-account
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-role
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-cluster-wide-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-cluster-wide
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-cluster-wide
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["autoscaling"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources:
+    - "jobs"
+    - "cronjobs"
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-endpoints-list-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-endpoints-list
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-endpoints-list
+rules:
+- apiGroups: [""]
+  resources: ["endpoints"]
+  verbs: ["list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-hpa-list-binding
+subjects:
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: dummy
+roleRef:
+  kind: ClusterRole
+  name: argocd-hpa-list
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argocd-hpa-list
+rules:
+- apiGroups: ["autoscaling"]
+  resources: ["horizontalpodautoscalers"]
+  verbs: ["list"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argocd-service-account
+  namespace: dummy

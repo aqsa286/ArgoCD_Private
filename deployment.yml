@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myapp-1
-        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/myapp-1-prod:latest
+        image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/myapp-prod:latest
         ports:
         - containerPort: 8080
 ---
@@ -26,7 +26,7 @@ spec:
   selector:
     app: myapp
   ports:
-  - port: 3000
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   

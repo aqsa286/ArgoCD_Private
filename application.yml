@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: myapp-argo-application
-  namespace: dummy
+  namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/aqsa286/ArgoCD_Private.git
     targetRevision: HEAD
-    path: .   # Specify the root path of your Git repository
+    path: .  # Specify the root path of your Git repository if the manifests are at the root
   destination:
     server: https://kubernetes.default.svc
     namespace: myapp

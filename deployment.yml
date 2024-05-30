@@ -19,7 +19,6 @@ spec:
         image: 736116236436.dkr.ecr.us-east-1.amazonaws.com/private-argocd:latest
         ports:
         - containerPort: 8080
-        
 ---
 apiVersion: v1
 kind: Service

@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: myapp-argo-application
   namespace: dummy
-  annotations:
-    argocd.argoproj.io/refresh: "30s"
 spec:
   project: default
   source:

@@ -4,7 +4,7 @@ metadata:
   name: myapp-argo-application
   namespace: dummy
   annotations:
-    argocd.argoproj.io/refresh: "20s"  # Set the refresh interval to 30 seconds
+    argocd.argoproj.io/refresh: "15s"  # Set the refresh interval to 30 seconds
 spec:
   project: default
   source:

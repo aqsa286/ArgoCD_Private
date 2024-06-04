@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: myapp-argo-application
   namespace: dummy
-  annotations:
-    argocd.argoproj.io/sync-wave: "10s"
 spec:
   project: default
   source:

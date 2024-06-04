@@ -4,7 +4,7 @@ metadata:
   name: myapp-argo-application
   namespace: dummy
   annotations:
-    argocd.argoproj.io/refresh: "0.1s"
+    argocd.argoproj.io/refresh: "10s"
 spec:
   project: default
   source:

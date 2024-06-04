@@ -3,14 +3,12 @@ kind: Application
 metadata:
   name: myapp-argo-application
   namespace: dummy
-  annotations:
-    argocd.argoproj.io/refresh: "30s"  # Set the refresh interval to 30 seconds
 spec:
   project: default
   source:
     repoURL: https://github.com/aqsa286/ArgoCD_Private.git
     targetRevision: HEAD
-    path: .  # Specify the root path of your Git repository
+    path: .  # Specify the root path of your Git repository if the manifests are at the root
   destination:
     server: https://kubernetes.default.svc
     namespace: myapp

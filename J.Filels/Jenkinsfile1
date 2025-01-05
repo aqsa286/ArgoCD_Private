@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'APPLICATION_YML_FILE', defaultValue: 'application.yml', description: 'Name of the application.yml file')
+        string(name: 'DEPLOYMENT_YML_FILE', defaultValue: 'deployment.yml', description: 'Name of the deployment.yml file')
+        string(name: 'ECR_URL', defaultValue: '736116236436.dkr.ecr.us-east-1.amazonaws.com', description: 'ECR URL')
+        string(name: 'ECR_NAME', defaultValue: 'private-argocd', description: 'ECR Repository Name')
+        string(name: 'DOCKER_TAG', defaultValue: 'latest', description: 'Docker Image Tag')
+        string(name: 'APPLICATION_NAME', defaultValue: 'myapp-argo-application', description: 'Name of the application')
+        string(name: 'CONTAINER_NAME', defaultValue: 'myapp', description: 'Name of the container')
+        string(name: 'CONTAINER_PORT', defaultValue: '8080', description: 'Port of the container')
+    }
+    stages {
+        stage("Git Clone") {
+            steps {
+                deleteDir()
+                git credentialsId: 'YOUR_GITHUB_ACCESS', url: 'https://github.com/aqsa286/ArgoCD_Private.git', branch: 'main'
+            }
+        }
+        stage("Replace Image Tag, Container_Name, Container_Port") {
+            steps {
+                script {
+                    sh """
+                    sed -i'' "s|image:.*|image: ${params.ECR_URL}/${ECR_NAME}:${DOCKER_TAG}|" ${params.DEPLOYMENT_YML_FILE}                    
+                    sed -i'' "s|- name:.*|- name: ${CONTAINER_NAME}|" ${params.DEPLOYMENT_YML_FILE}
+                    sed -i'' "s|port:.*|port: ${CONTAINER_PORT}|" ${params.DEPLOYMENT_YML_FILE}
+                    sed -i'' "s|name:.*|name: ${params.APPLICATION_NAME}|" ${params.APPLICATION_YML_FILE}
+                    """
+                }
+            }
+        }
+        stage('Commit changes') {
+            steps {
+                sh "git add ${params.DEPLOYMENT_YML_FILE} ${params.APPLICATION_YML_FILE}"
+                sh 'git commit -m "Update deployment image and application details"'
+            }
+        }
+        stage('Push changes') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'YOUR_GITHUB_ACCESS', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
+                    sh "git push https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/aqsa286/ArgoCD_Private.git main"
+                }
+            }
+        }
+    }
+}
+
+#We are using same repo: ArgoCD_Private 
+#Pass Parameter

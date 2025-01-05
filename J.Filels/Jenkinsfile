@@ -95,3 +95,4 @@ pipeline {
 
 
 // Merge two pipeline: Argocd-private-application & Argocd_Setup_test. (means merge jenkinsfile 1 & 2)
+// Argocd_Setup_final-P Jenkins-pipeline.

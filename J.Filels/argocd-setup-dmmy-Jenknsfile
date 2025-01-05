@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'CLUSTER_NAME', defaultValue: 'Cluster-1', description: 'Enter the name of your EKS cluster')
+        string(name: 'REGION_NAME', defaultValue: 'us-east-1', description: 'Enter the region of your EKS cluster')
+    }
+    stages {
+        stage("Git Clone") {
+            steps {
+                deleteDir()
+                git credentialsId: 'YOUR_GITHUB_ACCESS', url: 'https://github.com/aqsa286/ArgoCD_Private.git', branch: 'main'
+            }
+        }
+        stage('Update kubeconfig') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    sh "aws eks update-kubeconfig --name ${params.CLUSTER_NAME} --region ${params.REGION_NAME}"
+                }
+            }
+        }
+        stage('Install Argo CD on EKS Cluster') {
+            steps {
+                // Assuming you have AWS CLI configured with proper permissions
+                // Install Argo CD on EKS cluster
+                sh 'kubectl get nodes'
+                script {
+                    try {
+                        sh 'kubectl create namespace dummy'
+                    } catch (Exception e) {
+                        echo "Namespace 'dummy' already exists, skipping creation..."
+                    }
+                }
+                sh 'kubectl get namespaces'
+                sh 'kubectl apply -n dummy -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml'
+            }
+        }
+        stage('Deploy Application to Argo CD') {
+            steps {
+                // Deploy your application using kubectl apply
+                sh 'kubectl apply -f application.yml'
+                sh 'kubectl apply -f EKS-Permission.yml'
+            }
+        }
+        stage('Verify Deployment') {
+            steps {
+                sh 'kubectl get pods -n dummy'
+                // Add more commands to verify the deployment as needed
+            }
+        }
+    }
+}
+
+
+// Just for test

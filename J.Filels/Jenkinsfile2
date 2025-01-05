@@ -78,3 +78,5 @@ pipeline {
         }
     }
 }
+
+#Change ECR image tag using sed command
